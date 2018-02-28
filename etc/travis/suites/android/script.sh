@@ -4,7 +4,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../../../bash/common.lib.s
 
 code=0
 commands=(
-    validate-yarn-packages
+    test-jest
 )
 
 for command in ${commands[@]}; do
