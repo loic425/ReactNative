@@ -15,6 +15,12 @@ matrix:
                 apt:
                     packages:
                         - parallel
+        -
+            language: node_js
+            node_js: 8
+            env: JEDISJEUX_SUITE="application"
+
+script: .travis/run.sh
 
 cache:
     yarn: true
