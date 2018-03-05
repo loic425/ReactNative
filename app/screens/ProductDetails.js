@@ -4,7 +4,6 @@ import { Image, View } from 'react-native';
 export default class ProductDetails extends React.Component {
 
     static navigationOptions = ({navigation}) => {
-        console.log(navigation);
         return {
             title: navigation.state.params.name,
             tabBarIcon: () => {
