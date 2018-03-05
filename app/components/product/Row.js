@@ -12,8 +12,8 @@ export default class Row extends React.Component {
         return (
             <View style={[style.view, style.flex]}>
                 <Image
-                    style={{width: 50, height: 50}}
-                    source={{uri: this.props.row.image}}/>
+                    style={{width: 60, height: 60}}
+                    source={{uri: this.props.row.image.thumbnail}}/>
 
                 <Text>{this.props.row.name}</Text>
             </View>

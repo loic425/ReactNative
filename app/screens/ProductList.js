@@ -4,6 +4,7 @@ import style from "../assets/Style";
 import { StackNavigator } from "react-navigation";
 import ProductRow from './../components/product/Row';
 import ProductDetails from './ProductDetails';
+import axios from 'axios';
 
 class ProductList extends React.Component {
 
@@ -17,34 +18,23 @@ class ProductList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: [
-                {
-                    name: 'Lewis & Clark',
-                    minAge: 12,
-                    minPlayerCount: 1,
-                    maxPlayerCount: 5,
-                    image: 'http://www.jedisjeux.net/media/cache/thumbnail/uploads/img/lewis-clark-2-1392480144.png'
-                },
-                {
-                    name: 'Shogun',
-                    minAge: 12,
-                    minPlayerCount: 3,
-                    maxPlayerCount: 5,
-                    image: 'http://www.jedisjeux.net/media/cache/thumbnail/uploads/img/598d59c5bb1651.63204688.jpg'
-                },
-                {
-                    name: 'Ginkgopolis',
-                    minAge: 10,
-                    minPlayerCount: 1,
-                    maxPlayerCount: 5,
-                    image: 'http://www.jedisjeux.net/media/cache/thumbnail/uploads/img/ginkgopolis-49-1347090015.jpg'
-                }
-            ]
+            list: []
         };
+        this.fetchProducts();
     }
 
+    fetchProducts() {
+        axios.get('http://10.0.0.200/app_dev.php/api/products/').then((response) => {
+            console.log('response', response.data);
+            this.setState({list: response.data._embedded.items});
+        });
+    }
+
+    /**
+     * @param {object} row
+     */
     openDetails(row) {
-        this.props.navigation.navigate('ProductDetails', {'name': row.name});
+        this.props.navigation.navigate('ProductDetails', {'code': row.code, 'name': row.name});
     }
 
     render() {
