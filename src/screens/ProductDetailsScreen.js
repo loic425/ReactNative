@@ -3,7 +3,7 @@ import { Image, ScrollView, Text, Dimensions, ActivityIndicator } from 'react-na
 import axios from 'axios';
 import HTML from 'react-native-render-html';
 
-export default class ProductDetails extends React.Component {
+export default class ProductDetailsScreen extends React.Component {
 
     static navigationOptions = ({navigation}) => {
         return {

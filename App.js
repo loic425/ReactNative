@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
 
 // You can import from local files
-import About from './app/screens/About';
+import AboutScreen from './src/screens/AboutScreen';
 import { TabNavigator } from 'react-navigation'; // 1.2.1
-import style from './app/assets/Style';
-import ProductList from "./app/screens/ProductList";
+import style from './src/assets/Style';
+import ProductsScreen from "./src/screens/ProductsScreen";
 
 const Tabs = TabNavigator({
-    ProductList: {screen: ProductList},
-    About: {screen: About}
+    ProductsScreen: {screen: ProductsScreen},
+    About: {screen: AboutScreen}
 }, {
     tabBarPosition: 'bottom',
     tabBarOptions: {

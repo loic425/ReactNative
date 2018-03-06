@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
-export default class Row extends React.Component {
+export default class ProductCellComponent extends React.Component {
     static propTypes = {
         row: PropTypes.object,
         index: PropTypes.number

@@ -2,7 +2,7 @@ import React from 'react';
 import style from '../assets/Style';
 import { View, Text, Image } from 'react-native';
 
-export default class About extends React.Component {
+export default class AboutScreen extends React.Component {
 
     static navigationOptions = {
         tabBarIcon: () => {

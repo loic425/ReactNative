@@ -2,11 +2,11 @@ import React from 'react';
 import { Image, ListView, TouchableHighlight, ActivityIndicator } from 'react-native';
 import style from "../assets/Style";
 import { StackNavigator } from "react-navigation";
-import ProductRow from './../components/product/Row';
-import ProductDetails from './ProductDetails';
+import ProductCellComponent from './../components/product/ProductCellComponent';
+import ProductDetailsScreen from './ProductDetailsScreen';
 import axios from 'axios';
 
-class ProductList extends React.Component {
+class ProductsScreen extends React.Component {
 
     static navigationOptions = {
         title: `Jeux`,
@@ -33,7 +33,7 @@ class ProductList extends React.Component {
      * @param {object} row
      */
     openDetails(row) {
-        this.props.navigation.navigate('ProductDetails', {'code': row.code, 'name': row.name});
+        this.props.navigation.navigate('ProductDetailsScreen', {'code': row.code, 'name': row.name});
     }
 
     render() {
@@ -49,7 +49,7 @@ class ProductList extends React.Component {
                 renderRow={(row, a, index) =>
                     <TouchableHighlight
                         onPress={() => this.openDetails(row)}>
-                        <ProductRow row={row} index={parseInt(index, 10)}/>
+                        <ProductCellComponent row={row} index={parseInt(index, 10)}/>
                     </TouchableHighlight>
                 }
             />
@@ -63,12 +63,12 @@ const navigationOptions = {
 };
 
 export default StackNavigator({
-    ProductList: {
-        screen: ProductList,
+    ProductsScreen: {
+        screen: ProductsScreen,
         navigationOptions
     },
-    ProductDetails: {
-        screen: ProductDetails,
+    ProductDetailsScreen: {
+        screen: ProductDetailsScreen,
         navigationOptions
     }
 });
