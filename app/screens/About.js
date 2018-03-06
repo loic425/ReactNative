@@ -1,6 +1,6 @@
 import React from 'react';
 import style from '../assets/Style';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
 export default class About extends React.Component {
 
@@ -25,7 +25,6 @@ export default class About extends React.Component {
                     esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
                     culpa qui officia deserunt mollit anim id est laborum.
                 </Text>
-                <Button color={style.color} onPress={() => this.search()} title="Rechercher une ville"/>
             </View>
         );
     }
