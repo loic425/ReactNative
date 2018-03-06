@@ -1,5 +1,7 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image, ScrollView, Text, Dimensions, ActivityIndicator } from 'react-native';
+import axios from 'axios';
+import HTML from 'react-native-render-html';
 
 export default class ProductDetails extends React.Component {
 
@@ -15,13 +17,39 @@ export default class ProductDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: 'Lewis & Clark'
+            product: null
         };
+        this.fetchProductDetails();
+    }
+
+    fetchProductDetails() {
+        const code =this.props.navigation.state.params.code;
+
+        axios.get(`http://10.0.0.200/app_dev.php/api/products/${code}`).then((response) => {
+            this.setState({product: response.data});
+        });
     }
 
     render() {
+        const product = this.state.product;
+
+        if (null === product) {
+            return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
+        }
+
+        const currentLocale = product.current_locale;
+        const productTranslation = product.translations[currentLocale];
+
         return (
-            <View/>
+            <ScrollView style={{flex: 1}}>
+                <Image
+                    style={{width: 250, height: 172}}
+                    source={{uri: product.image.magazine_item}}/>
+                <Text>de {product.min_player_count} à {product.max_player_count} joueurs</Text>
+                <Text>à partir de {product.min_age} ans</Text>
+                <HTML html={productTranslation.short_description} imagesMaxWidth={Dimensions.get('window').width} />
+                <HTML html={productTranslation.description} imagesMaxWidth={Dimensions.get('window').width} />
+            </ScrollView>
         );
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ListView, TouchableHighlight } from 'react-native';
+import { Image, ListView, TouchableHighlight, ActivityIndicator } from 'react-native';
 import style from "../assets/Style";
 import { StackNavigator } from "react-navigation";
 import ProductRow from './../components/product/Row';
@@ -18,14 +18,13 @@ class ProductList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: []
+            list: null
         };
         this.fetchProducts();
     }
 
     fetchProducts() {
         axios.get('http://10.0.0.200/app_dev.php/api/products/').then((response) => {
-            console.log('response', response.data);
             this.setState({list: response.data._embedded.items});
         });
     }
@@ -38,6 +37,10 @@ class ProductList extends React.Component {
     }
 
     render() {
+        if (null === this.state.list) {
+            return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
+        }
+
         const dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         return (
