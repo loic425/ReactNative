@@ -18,14 +18,14 @@ class ProductsScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: null
+            products: null
         };
         this.fetchProducts();
     }
 
     fetchProducts() {
         axios.get('http://10.0.0.200/app_dev.php/api/products/').then((response) => {
-            this.setState({list: response.data._embedded.items});
+            this.setState({products: response.data._embedded.items});
         });
     }
 
@@ -37,7 +37,7 @@ class ProductsScreen extends React.Component {
     }
 
     render() {
-        if (null === this.state.list) {
+        if (null === this.state.products) {
             return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
         }
 
@@ -45,7 +45,7 @@ class ProductsScreen extends React.Component {
 
         return (
             <ListView
-                dataSource={dataSource.cloneWithRows(this.state.list)}
+                dataSource={dataSource.cloneWithRows(this.state.products)}
                 renderRow={(row, a, index) =>
                     <TouchableHighlight
                         onPress={() => this.openDetails(row)}>
