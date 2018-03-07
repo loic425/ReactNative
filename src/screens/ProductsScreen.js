@@ -5,6 +5,7 @@ import { StackNavigator } from "react-navigation";
 import ProductCellComponent from './../components/product/ProductCellComponent';
 import ProductDetailsScreen from './ProductDetailsScreen';
 import axios from 'axios';
+import Config from 'react-native-config';
 
 class ProductsScreen extends React.Component {
 
@@ -24,7 +25,7 @@ class ProductsScreen extends React.Component {
     }
 
     fetchProducts() {
-        axios.get('http://10.0.0.200/app_dev.php/api/products/').then((response) => {
+        axios.get(`${Config.API_BASE_URL}/api/products/`).then((response) => {
             this.setState({products: response.data._embedded.items});
         });
     }

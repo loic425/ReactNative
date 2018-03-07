@@ -17,3 +17,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+.env
+!env.dist
+
+# build
+*/build

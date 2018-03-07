@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, ScrollView, Text, Dimensions, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import HTML from 'react-native-render-html';
+import Config from 'react-native-config';
 
 export default class ProductDetailsScreen extends React.Component {
 
@@ -25,7 +26,7 @@ export default class ProductDetailsScreen extends React.Component {
     fetchProductDetails() {
         const code =this.props.navigation.state.params.code;
 
-        axios.get(`http://10.0.0.200/app_dev.php/api/products/${code}`).then((response) => {
+        axios.get(`${Config.API_BASE_URL}/api/products/${code}`).then((response) => {
             this.setState({product: response.data});
         });
     }
