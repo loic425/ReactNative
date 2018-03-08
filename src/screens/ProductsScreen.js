@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, ListView, TouchableHighlight, ActivityIndicator } from 'react-native';
 import { StackNavigator } from "react-navigation";
 import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
 import ProductCellComponent from './../components/product/ProductCellComponent';
 import ProductDetailsScreen from './ProductDetailsScreen';
@@ -9,7 +10,6 @@ import ProductDetailsScreen from './ProductDetailsScreen';
 import * as ProductsActions from '../actions/ProductsActions';
 
 import style from "../assets/Style";
-import { connect } from "react-redux";
 
 class ProductsScreen extends React.Component {
 
@@ -38,7 +38,7 @@ class ProductsScreen extends React.Component {
     }
 
     render() {
-        if (null === this.props.isLoading) {
+        if (this.props.isLoading) {
             return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
         }
 
