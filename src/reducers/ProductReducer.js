@@ -1,24 +1,24 @@
 import * as ProductConstants from '../constants/ProductConstants';
 
 const initialState = {
-    products: [],
+    product: {},
     isLoading: true,
 };
 
 export default (state = initialState, action) => {
     switch(action.type) {
-        case ProductConstants.LIST_REQUESTED:
+        case ProductConstants.GET_REQUESTED:
             return {
                 ...state,
                 isLoading: true,
             };
-        case ProductConstants.LIST_SUCCESS:
+        case ProductConstants.GET_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                products: action.data
+                product: action.data
             };
-        case ProductConstants.LIST_FAILURE:
+        case ProductConstants.GET_FAILURE:
             return {
                 ...state,
                 isLoading: false,
