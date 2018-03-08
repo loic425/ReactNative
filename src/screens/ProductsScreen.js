@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image, ListView, TouchableHighlight, ActivityIndicator } from 'react-native';
-import { StackNavigator } from "react-navigation";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
@@ -8,8 +7,6 @@ import ProductCellComponent from './../components/product/ProductCellComponent';
 import ProductDetailsScreen from './ProductDetailsScreen';
 
 import * as ProductsActions from '../actions/ProductsActions';
-
-import style from "../assets/Style";
 
 class ProductsScreen extends React.Component {
 
@@ -71,20 +68,4 @@ const mapDispatchToProps = (dispatch, props) => {
     };
 };
 
-const productScreen = connect(mapStateToProps, mapDispatchToProps)(ProductsScreen);
-
-const navigationOptions = {
-    headerStyle: style.header,
-    headerTitleStyle: style.headerTitle
-};
-
-export default StackNavigator({
-    ProductsScreen: {
-        screen: productScreen,
-        navigationOptions
-    },
-    ProductDetailsScreen: {
-        screen: ProductDetailsScreen,
-        navigationOptions
-    }
-});
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsScreen);

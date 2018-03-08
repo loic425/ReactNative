@@ -4,14 +4,14 @@ import { Provider } from "react-redux";
 import { TabNavigator } from 'react-navigation'; // 1.2.1
 
 // You can import from local files
+import ProductStackNavigator from "./src/navigators/ProductStackNavigator";
 import AboutScreen from './src/screens/AboutScreen';
 import style from './src/assets/Style';
-import ProductsScreen from "./src/screens/ProductsScreen";
 import store from "./store";
 
 const Tabs = TabNavigator({
-    ProductsScreen: {screen: ProductsScreen},
-    About: {screen: AboutScreen}
+    ProductsScreen: { screen: ProductStackNavigator },
+    About: { screen: AboutScreen }
 }, {
     tabBarPosition: 'bottom',
     tabBarOptions: {
