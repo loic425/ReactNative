@@ -9,7 +9,10 @@ import axios from 'axios';
  * @returns {AxiosPromise<T>}
  */
 export const fetchProducts = () => {
-    const url = '/api/products';
+    // Todo: Configuration + Axios Init
+    const resource = 'http://pre-prod.jedisjeux.net/api/products/';
 
-    return axios.get(url);
+    return axios.get(resource).then((response) => {
+        return response.data._embedded.items;
+    });
 };

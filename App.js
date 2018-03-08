@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
+import { Provider } from "react-redux";
+import { TabNavigator } from 'react-navigation'; // 1.2.1
 
 // You can import from local files
 import AboutScreen from './src/screens/AboutScreen';
-import { TabNavigator } from 'react-navigation'; // 1.2.1
 import style from './src/assets/Style';
 import ProductsScreen from "./src/screens/ProductsScreen";
+import store from "./store";
 
 const Tabs = TabNavigator({
     ProductsScreen: {screen: ProductsScreen},
@@ -30,10 +32,12 @@ const Tabs = TabNavigator({
 export default class App extends Component {
     render() {
         return (
-            <View style={{flex: 1}}>
-                <StatusBar/>
-                <Tabs/>
-            </View>
+            <Provider store={store}>
+                <View style={{flex: 1}}>
+                    <StatusBar/>
+                    <Tabs/>
+                </View>
+            </Provider>
         );
     }
 }
