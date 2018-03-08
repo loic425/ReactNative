@@ -9,7 +9,6 @@ const navigationOptions = {
     headerTitleStyle: style.headerTitle
 };
 
-
 export default StackNavigator({
     ProductsScreen: {
         screen: ProductsScreen,
