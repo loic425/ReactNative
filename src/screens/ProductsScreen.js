@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import ProductCellComponent from './../components/product/ProductCellComponent';
 import ProductDetailsScreen from './ProductDetailsScreen';
 
-import * as ProductsActions from '../actions/ProductsActions';
+import * as ProductsActions from '../actions/ProductActions';
 
 class ProductsScreen extends React.Component {
 

@@ -1,9 +1,12 @@
 import React from 'react';
 import { Image, ScrollView, Text, Dimensions, ActivityIndicator } from 'react-native';
-import axios from 'axios';
+import {connect} from "react-redux";
 import HTML from 'react-native-render-html';
+import {bindActionCreators} from "redux";
 
-export default class ProductDetailsScreen extends React.Component {
+import * as ProductActions from '../actions/ProductActions';
+
+class ProductDetailsScreen extends React.Component {
 
     static navigationOptions = ({navigation}) => {
         return {
@@ -24,19 +27,16 @@ export default class ProductDetailsScreen extends React.Component {
 
     fetchProductDetails() {
         const code =this.props.navigation.state.params.code;
-
-        axios.get(`http://10.0.0.200/app_dev.php/api/products/${code}`).then((response) => {
-            this.setState({product: response.data});
-        });
+        this.props.productAction.fetchProduct(code);
     }
 
     render() {
-        const product = this.state.product;
 
-        if (null === product) {
+        if (this.props.isLoading) {
             return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
         }
 
+        const product = this.props.product;
         const currentLocale = product.current_locale;
         const productTranslation = product.translations[currentLocale];
 
@@ -53,3 +53,18 @@ export default class ProductDetailsScreen extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        isLoading: state.ProductReducer.isLoading,
+        product: state.ProductReducer.product,
+    };
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        productAction: bindActionCreators(ProductActions, dispatch, props)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetailsScreen);
