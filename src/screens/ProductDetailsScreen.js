@@ -36,7 +36,7 @@ class ProductDetailsScreen extends React.Component {
             return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
         }
 
-        const product = this.props.product;
+        const {product} = this.props;
         const currentLocale = product.current_locale;
         const productTranslation = product.translations[currentLocale];
 

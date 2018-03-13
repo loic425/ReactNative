@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ListView, TouchableHighlight, ActivityIndicator } from 'react-native';
+import { Image, ListView, TouchableHighlight, ActivityIndicator, RefreshControl } from 'react-native';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
@@ -35,14 +35,16 @@ class ProductsScreen extends React.Component {
     }
 
     render() {
-        if (this.props.isLoading) {
-            return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
-        }
-
         const dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         return (
             <ListView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.props.isLoading}
+                        onRefresh={this.fetchProducts.bind(this)}
+                    />
+                }
                 dataSource={dataSource.cloneWithRows(this.props.products)}
                 renderRow={(row, a, index) =>
                     <TouchableHighlight
