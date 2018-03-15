@@ -1,11 +1,12 @@
 import React from 'react';
 import { Image, ListView, TouchableHighlight, ActivityIndicator } from 'react-native';
-import style from "../assets/Style";
-import { StackNavigator } from "react-navigation";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+
 import ProductCellComponent from './../components/product/ProductCellComponent';
 import ProductDetailsScreen from './ProductDetailsScreen';
-import axios from 'axios';
-import Config from 'react-native-config';
+
+import * as ProductsActions from '../actions/ProductActions';
 
 class ProductsScreen extends React.Component {
 
@@ -18,16 +19,12 @@ class ProductsScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            products: null
-        };
+
         this.fetchProducts();
     }
 
     fetchProducts() {
-        axios.get(`${Config.API_BASE_URL}/api/products/`).then((response) => {
-            this.setState({products: response.data._embedded.items});
-        });
+        this.props.productsAction.fetchProducts();
     }
 
     /**
@@ -38,7 +35,7 @@ class ProductsScreen extends React.Component {
     }
 
     render() {
-        if (null === this.state.products) {
+        if (this.props.isLoading) {
             return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
         }
 
@@ -46,7 +43,7 @@ class ProductsScreen extends React.Component {
 
         return (
             <ListView
-                dataSource={dataSource.cloneWithRows(this.state.products)}
+                dataSource={dataSource.cloneWithRows(this.props.products)}
                 renderRow={(row, a, index) =>
                     <TouchableHighlight
                         onPress={() => this.openDetails(row)}>
@@ -58,18 +55,17 @@ class ProductsScreen extends React.Component {
     }
 }
 
-const navigationOptions = {
-    headerStyle: style.header,
-    headerTitleStyle: style.headerTitle
+const mapStateToProps = state => {
+    return {
+        isLoading: state.ProductsReducer.isLoading,
+        products: state.ProductsReducer.products,
+    };
 };
 
-export default StackNavigator({
-    ProductsScreen: {
-        screen: ProductsScreen,
-        navigationOptions
-    },
-    ProductDetailsScreen: {
-        screen: ProductDetailsScreen,
-        navigationOptions
-    }
-});
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        productsAction: bindActionCreators(ProductsActions, dispatch, props)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsScreen);

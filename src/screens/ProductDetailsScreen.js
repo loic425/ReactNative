@@ -1,10 +1,12 @@
 import React from 'react';
 import { Image, ScrollView, Text, Dimensions, ActivityIndicator } from 'react-native';
-import axios from 'axios';
+import {connect} from "react-redux";
 import HTML from 'react-native-render-html';
-import Config from 'react-native-config';
+import {bindActionCreators} from "redux";
 
-export default class ProductDetailsScreen extends React.Component {
+import * as ProductActions from '../actions/ProductActions';
+
+class ProductDetailsScreen extends React.Component {
 
     static navigationOptions = ({navigation}) => {
         return {
@@ -25,26 +27,25 @@ export default class ProductDetailsScreen extends React.Component {
 
     fetchProductDetails() {
         const code =this.props.navigation.state.params.code;
-
-        axios.get(`${Config.API_BASE_URL}/api/products/${code}`).then((response) => {
-            this.setState({product: response.data});
-        });
+        this.props.productAction.fetchProduct(code);
     }
 
     render() {
-        const product = this.state.product;
 
-        if (null === product) {
+        if (this.props.isLoading) {
             return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
         }
 
+        const { width } = Dimensions.get('window');
+        const product = this.props.product;
         const currentLocale = product.current_locale;
         const productTranslation = product.translations[currentLocale];
 
         return (
             <ScrollView style={{flex: 1}}>
                 <Image
-                    style={{width: 250, height: 172}}
+                    style={{width: width, height: 172}}
+                    resizeMode="cover"
                     source={{uri: product.image.magazine_item}}/>
                 <Text>de {product.min_player_count} à {product.max_player_count} joueurs</Text>
                 <Text>à partir de {product.min_age} ans</Text>
@@ -54,3 +55,18 @@ export default class ProductDetailsScreen extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        isLoading: state.ProductReducer.isLoading,
+        product: state.ProductReducer.product,
+    };
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        productAction: bindActionCreators(ProductActions, dispatch, props)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetailsScreen);
