@@ -2,6 +2,7 @@
  * Created by quentinmachard on 07/03/2018.
  */
 import axios from 'axios';
+import Config from 'react-native-config';
 
 /**
  * Fetch list of Products
@@ -9,8 +10,7 @@ import axios from 'axios';
  * @returns {AxiosPromise<T>}
  */
 export const fetchProducts = () => {
-    // Todo: Configuration + Axios Init
-    const resource = `http://pre-prod.jedisjeux.net/api/products/`;
+    const resource = `${Config.API_BASE_URL}/api/products/`;
 
     return axios.get(resource).then((response) => {
         return response.data._embedded.items;
@@ -23,8 +23,7 @@ export const fetchProducts = () => {
  * @returns {AxiosPromise<T>}
  */
 export const fetchProduct = (code) => {
-    // Todo: Configuration + Axios Init
-    const resource = `http://pre-prod.jedisjeux.net/api/products/${code}`;
+    const resource = `${Config.API_BASE_URL}/api/products/${code}`;
 
     return axios.get(resource).then((response) => {
         return response.data;
