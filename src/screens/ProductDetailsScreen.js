@@ -36,14 +36,16 @@ class ProductDetailsScreen extends React.Component {
             return <ActivityIndicator size="large" style={{flex: 1, alignContent: 'center'}}/>
         }
 
-        const {product} = this.props;
+        const { width } = Dimensions.get('window');
+        const { product } = this.props;
         const currentLocale = product.current_locale;
         const productTranslation = product.translations[currentLocale];
 
         return (
             <ScrollView style={{flex: 1}}>
                 <Image
-                    style={{width: 250, height: 172}}
+                    style={{width: width, height: 172}}
+                    resizeMode="cover"
                     source={{uri: product.image.magazine_item}}/>
                 <Text>de {product.min_player_count} à {product.max_player_count} joueurs</Text>
                 <Text>à partir de {product.min_age} ans</Text>
