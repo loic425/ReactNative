@@ -37,7 +37,7 @@ class ProductDetailsScreen extends React.Component {
         }
 
         const { width } = Dimensions.get('window');
-        const product = this.props.product;
+        const { product } = this.props;
         const currentLocale = product.current_locale;
         const productTranslation = product.translations[currentLocale];
 
